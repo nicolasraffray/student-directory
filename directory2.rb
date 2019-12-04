@@ -24,12 +24,12 @@ def input_students
   while true do
     # get another name from the user
     puts "Please enter the names of the student"
-    name = gets.strip
+    name = gets.strip # Strip removes white-space before and after word
     if !name.empty?
       puts "Please add in a hobby"
-      hobby = gets.strip
+      hobby = gets.delete(' ') # removing white space a different way
       puts "Please add your cohort month (1-12)"
-      month = gets.strip
+      month = gets.gsub(/\s+/, "") # removins white space
       month = month.to_i
       if month > 12 || month < 1
         month = 12
@@ -58,22 +58,25 @@ end
 
 def print(names)
   #names.each{ |x| x.each{ |x,y| puts "#{x}: #{y}".center(30) } }
+  if names.count != 0
+    sorted_by_cohort = {}
 
-  sorted_by_cohort = {}
+    names.each do |student|
+      cohort = student[:cohort]
 
-  names.each do |student|
-    cohort = student[:cohort]
+      if sorted_by_cohort[cohort] == nil
+        sorted_by_cohort[cohort] = []
+      end
 
-    if sorted_by_cohort[cohort] == nil
-      sorted_by_cohort[cohort] = []
+      sorted_by_cohort[cohort].push(student[:name])
     end
 
-    sorted_by_cohort[cohort].push(student[:name])
-  end
-
-  puts "Students sorted by thier cohort"
-  sorted_by_cohort.each do |key, value|
+    puts "Students sorted by thier cohort"
+    sorted_by_cohort.each do |key, value|
      puts "#{key}:" + " #{value.join(", ")}"
+    end
+  else
+    puts "You didn't input any students"
   end
 end
 
