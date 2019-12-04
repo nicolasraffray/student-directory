@@ -16,6 +16,11 @@ def input_students
   # create an empty array
   students = []
   name = "x"
+  month_hash = {
+    1 => :January, 2 => :Febuary, 3 => :March, 4 => :April, 5 => :May, 6 => :June,
+    7 => :July, 8 => :August, 9 => :September, 10 => :October, 11 => :November,
+    12 => :December
+  }
   # while the name is not empty, repeat this code
   while true do
     # get another name from the user
@@ -24,10 +29,13 @@ def input_students
     if !name.empty?
       puts "Please add in a hobby"
       hobby = gets.chomp
-      puts "Please add country of birth"
-      country = gets.chomp
-      students << {name: name, cohort: :november, hobby: hobby,
-        birth_nation: country}
+      puts "Please add your cohort month (1-12)"
+      month = gets.chomp
+      month = month.to_i
+      if month > 12 || month < 1
+        month = 12
+      end
+      students << {name: name, cohort: month_hash[month]}
       puts "Now we have #{students.count} students"
       puts "Hit enter Once to exit"
     else
