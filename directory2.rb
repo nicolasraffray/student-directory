@@ -15,7 +15,6 @@ students = [
 def input_students
   # create an empty array
   students = []
-  name = "x"
   month_hash = {
     1 => :January, 2 => :Febuary, 3 => :March, 4 => :April, 5 => :May, 6 => :June,
     7 => :July, 8 => :August, 9 => :September, 10 => :October, 11 => :November,
@@ -24,7 +23,7 @@ def input_students
   # while the name is not empty, repeat this code
   while true do
     # get another name from the user
-    puts "Please enter the names of the students"
+    puts "Please enter the names of the student"
     name = gets.chomp
     if !name.empty?
       puts "Please add in a hobby"
@@ -51,7 +50,24 @@ def print_header
 end
 
 def print(names)
-  names.each{ |x| x.each{ |x,y| puts "#{x}: #{y}".center(30) } }
+  #names.each{ |x| x.each{ |x,y| puts "#{x}: #{y}".center(30) } }
+
+  sorted_by_cohort = {}
+
+  names.each do |student|
+    cohort = student[:cohort]
+
+    if sorted_by_cohort[cohort] == nil
+      sorted_by_cohort[cohort] = []
+    end
+
+    sorted_by_cohort[cohort].push(student[:name])
+  end
+
+  puts "Students sorted by thier cohort"
+  sorted_by_cohort.each do |key, value|
+     puts "#{key}:" + " #{value.join(", ")}"
+  end
 end
 
   #names.each_with_index do |student, index|
