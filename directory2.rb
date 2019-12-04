@@ -33,10 +33,17 @@ def input_students
       month = month.to_i
       if month > 12 || month < 1
         month = 12
+      # consider adding elsif statement for typo instead of passing to default?
+      # or rearrange loop
       end
       students << {name: name, cohort: month_hash[month]}
-      puts "Now we have #{students.count} students"
-      puts "Hit enter Once to exit"
+      if students.count > 1
+        puts "Now we have #{students.count} students"
+        puts "Hit enter once to exit"
+      elsif students.count == 1
+        puts "Now we have 1 student"
+        puts "Hit enter once to exit"
+      end
     else
       break
     end
@@ -77,7 +84,11 @@ end
   #end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  if names.count > 1
+    puts "Overall, we have #{names.count} great students"
+  elsif names.count == 1
+    puts "Overall, we have #{names.count} great student"
+  end
 end
 
 # nothing happens until we call the methods
