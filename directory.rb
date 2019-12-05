@@ -1,17 +1,17 @@
 # first we print the list of students
-students = [
-  {name: "Dr. Hannibal Lecter", cohort: :november},
-  {name: "Darth Vader", cohort: :november},
-  {name: "Nurse Ratched", cohort: :november},
-  {name: "Micheal Corleone", cohort: :november},
-  {name: "Alex DeLarge", cohort: :november},
-  {name: "The Wicked Witch of the West", cohort: :november},
-  {name: "Terminator", cohort: :november},
-  {name: "freddy Krueger", cohort: :november},
-  {name: "The Joker", cohort: :november},
-  {name: "Joffrey Baratheon", cohort: :november},
-  {name: "Norman Bates", cohort: :november}
-]
+# students = [
+#  {name: "Dr. Hannibal Lecter", cohort: :november},
+#  {name: "Darth Vader", cohort: :november},
+#  {name: "Nurse Ratched", cohort: :november},
+#  {name: "Micheal Corleone", cohort: :november},
+#  {name: "Alex DeLarge", cohort: :november},
+#  {name: "The Wicked Witch of the West", cohort: :november},
+#  {name: "Terminator", cohort: :november},
+#  {name: "freddy Krueger", cohort: :november},
+#  {name: "The Joker", cohort: :november},
+#  {name: "Joffrey Baratheon", cohort: :november},
+#  {name: "Norman Bates", cohort: :november}
+# ]
 
 @students = []
 
@@ -54,6 +54,7 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the students to a csv file"
   puts "9. Exit" # 9. bc there will likely be more elements added
 end
 
@@ -61,6 +62,18 @@ def show_students
   print_header
   print_students_list
   print_footer
+end
+
+def save_students
+  # open the file for writing
+  file = File.open("studnets.csv", "w")
+  # iterate over the array of Students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
 end
 
 def process(selection)
@@ -71,6 +84,8 @@ def process(selection)
   when "2"
     # show the studnets
     show_students
+  when "3"
+    save_students
   when "9"
     exit # causes the program to terminate
   else
