@@ -19,13 +19,13 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return"
   # get the first name
-  name = gets.chomp
+  name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} students"
     # get another name from the user
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -56,6 +56,7 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save the students to a csv file"
   puts "4. Load the list form students.csv"
+  puts "5. Load Data as arguement from command line"
   puts "9. Exit" # 9. bc there will likely be more elements added
 end
 
@@ -63,15 +64,6 @@ def show_students
   print_header
   print_students_list
   print_footer
-end
-
-def load_students
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
-  end
-  file.close
 end
 
 def save_students
@@ -86,18 +78,39 @@ def save_students
   file.close
 end
 
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
+def try_load_students
+  filename = ARGV.first # first arguement from the command line
+  return if filename.nil? # exit the method if the file name doesn't exist
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't esixt."
+    exit
+  end
+end
+
 def process(selection)
   case selection
   when "1"
     # input the students
-    input_students
+    input_students()
   when "2"
     # show the studnets
-    show_students
+    show_students()
   when "3"
-    save_students
+    save_students()
   when "4"
-    load_students
+    load_students()
   when "9"
     exit # causes the program to terminate
   else
@@ -108,8 +121,9 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
-interactive_menu
+try_load_students()
+interactive_menu()
