@@ -1,17 +1,17 @@
 # first we print the list of students
-students = [
-  {name: "Dr. Hannibal Lecter", cohort: :november},
-  {name: "Darth Vader", cohort: :november},
-  {name: "Nurse Ratched", cohort: :november},
-  {name: "Micheal Corleone", cohort: :november},
-  {name: "Alex DeLarge", cohort: :november},
-  {name: "The Wicked Witch of the West", cohort: :november},
-  {name: "Terminator", cohort: :november},
-  {name: "freddy Krueger", cohort: :november},
-  {name: "The Joker", cohort: :november},
-  {name: "Joffrey Baratheon", cohort: :november},
-  {name: "Norman Bates", cohort: :november}
-]
+# students = [
+#   {name: "Dr. Hannibal Lecter", cohort: :november},
+#   {name: "Darth Vader", cohort: :november},
+#   {name: "Nurse Ratched", cohort: :november},
+#   {name: "Micheal Corleone", cohort: :november},
+#   {name: "Alex DeLarge", cohort: :november},
+#   {name: "The Wicked Witch of the West", cohort: :november},
+#   {name: "Terminator", cohort: :november},
+#   {name: "freddy Krueger", cohort: :november},
+#   {name: "The Joker", cohort: :november},
+#   {name: "Joffrey Baratheon", cohort: :november},
+#   {name: "Norman Bates", cohort: :november}
+# ]
 def input_students
   # create an empty array
   students = []
@@ -33,8 +33,8 @@ def input_students
       month = month.to_i
       if month > 12 || month < 1
         month = 12
-      # consider adding elsif statement for typo instead of passing to default?
-      # or rearrange loop
+        # consider adding elsif statement for typo instead of passing to default?
+        # or rearrange loop
       end
       students << {name: name, cohort: month_hash[month]}
       if students.count > 1
