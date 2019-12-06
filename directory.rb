@@ -47,9 +47,11 @@ def process(selection)
     # show the studnets
     show_students()
   when "3"
-    save_students()
+    get_file_name()
+    save_students(@filename)
   when "4"
-    load_students()
+    get_file_name()
+    load_students(@filename)
   when "9"
     exit # causes the program to terminate
   else
@@ -63,13 +65,23 @@ end
 
 def get_name_from_user()
   @name = STDIN.gets.chomp # this was a much repeated line
-  @name
 end
 
 def fill_students_array
   @students << {name: @name, cohort: :november}
 end
 
+def get_file_name()
+  puts "Please type the name of the file or enter for default option"
+  @filename = STDIN.gets.chomp
+  if @filename.empty?
+    return
+  else
+    @filename
+  end
+end
+
+# 1st Menu item
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return"
@@ -85,6 +97,7 @@ def input_students
   end
 end
 
+# 2nd Menu item
 def show_students
   print_header
   print_students_list
@@ -107,9 +120,10 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def save_students
+# 3rd Menu item
+def save_students(filename = "students.csv")
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of Students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -120,6 +134,7 @@ def save_students
   action_successful
 end
 
+# 4th Menu item
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
@@ -130,6 +145,7 @@ def load_students(filename = "students.csv")
   action_successful
 end
 
+# 5th menu item
 def try_load_students
   filename = ARGV.first # first arguement from the command line
   return if filename.nil? # exit the method if the file name doesn't exist
