@@ -123,25 +123,25 @@ end
 # 3rd Menu item
 def save_students(filename = "students.csv")
   # open the file for writing
-  file = File.open(filename, "w")
+  File.open(filename, "w") do |f|
   # iterate over the array of Students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      f.puts csv_line
+    end
   end
-  file.close
   action_successful
 end
 
 # 4th Menu item
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    @name, cohort = line.chomp.split(',')
-    fill_students_array()
+  File.open(filename, "r") do |f|
+    f.readlines.each do |line|
+      @name, cohort = line.chomp.split(',')
+      fill_students_array()
+    end
   end
-  file.close
   action_successful
 end
 
@@ -156,7 +156,7 @@ def try_load_students
     puts "Sorry, #{filename} doesn't esixt."
     exit
   end
-  action_successful
+  puts "You loaded #{filename} sucessfully"
 end
 
 interactive_menu()
