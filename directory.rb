@@ -12,7 +12,7 @@
 #  {name: "Joffrey Baratheon", cohort: :november},
 #  {name: "Norman Bates", cohort: :november}
 # ]
-
+require 'csv'
 @students = []
 
 # nothing happens until we call the methods
@@ -122,28 +122,43 @@ end
 
 # 3rd Menu item
 def save_students(filename = "students.csv")
-  # open the file for writing
-  File.open(filename, "w") do |f|
-  # iterate over the array of Students
-    @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      f.puts csv_line
+  CSV.open(filename, "wb") do |csv|
+    @students.each do |hash|
+      csv << hash.values
     end
   end
-  action_successful
 end
+
+#def save_students(filename = "students.csv")
+#  # open the file for writing
+#  File.open(filename, "w") do |f|
+#  # iterate over the array of Students
+#    @students.each do |student|
+#      student_data = [student[:name], student[:cohort]]
+#      csv_line = student_data.join(",")
+#      f.puts csv_line
+#    end
+#  end
+#  action_successful
+#end
 
 # 4th Menu item
 def load_students(filename = "students.csv")
-  File.open(filename, "r") do |f|
-    f.readlines.each do |line|
-      @name, cohort = line.chomp.split(',')
-      fill_students_array()
-    end
+  CSV.foreach(filename) do |row|
+    @name, cohort = row.join(',')
+    fill_students_array()
   end
-  action_successful
 end
+
+# def load_students(filename = "students.csv")
+#   File.open(filename, "r") do |f|
+#     f.readlines.each do |line|
+#       @name, cohort = line.chomp.split(',')
+#       fill_students_array()
+#     end
+#   end
+#   action_successful
+# end
 
 # 5th menu item
 def try_load_students
