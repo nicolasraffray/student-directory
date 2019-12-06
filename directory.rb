@@ -57,6 +57,10 @@ def process(selection)
   end
 end
 
+def get_name_from_user()
+  @name = STDIN.gets.chomp # this was a much repeated line
+end
+
 def fill_students_array
   @students << {name: @name, cohort: :november}
 end
@@ -65,13 +69,13 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return"
   # get the first name
-  @name = STDIN.gets.chomp
+  get_name_from_user()
   # while the name is not empty, repeat this code
   while !name.empty? do
     fill_students_array()
     puts "Now we have #{@students.count} students"
     # get another name from the user
-    @name = STDIN.gets.chomp
+    get_name_from_user()
   end
 end
 
